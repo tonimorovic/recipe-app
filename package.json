@@ -1,15 +1,22 @@
 {
-  "name": "@recipe-app/source",
-  "version": "0.0.0",
-  "license": "MIT",
-  "scripts": {},
-  "private": true,
-  "dependencies": {},
-  "devDependencies": {
-    "@nx/js": "16.3.2",
-    "@nx/workspace": "16.3.2",
-    "nx": "16.3.2",
-    "prettier": "^2.6.2",
-    "typescript": "~5.0.2"
-  }
+  "name": "recipe-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:ui": "npm run dev --workspace=recipe-app-ui",
+    "build:ui": "npm run build --workspace=recipe-app-ui",
+    "start:ui": "npm run start --workspace=recipe-app-ui",
+    "lint:ui": "npm run lint --workspace=recipe-app-ui",
+    "dev:api": "npm run dev --workspace=recipe-app-api",
+    "build:api": "npm run build --workspace=recipe-app-api",
+    "start:api": "npm run start --workspace=recipe-app-api"
+  },
+  "workspaces": [
+    "packages/recipe-app-ui",
+    "packages/recipe-app-api"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
