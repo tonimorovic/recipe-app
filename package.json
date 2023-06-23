@@ -10,7 +10,9 @@
     "lint:ui": "npm run lint --workspace=recipe-app-ui",
     "dev:api": "npm run dev --workspace=recipe-app-api",
     "build:api": "npm run build --workspace=recipe-app-api",
-    "start:api": "npm run start --workspace=recipe-app-api"
+    "start:api": "npm run start --workspace=recipe-app-api",
+    "test:api": "npm run test --workspace=recipe-app-api",
+    "test:api:watch": "npm run test:watch --workspace=recipe-app-api"
   },
   "workspaces": [
     "packages/recipe-app-ui",
