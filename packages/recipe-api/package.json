@@ -8,7 +8,12 @@
     "start": "node dist/index.js",
     "dev": "nodemon src/index.ts",
     "test": "NODE_ENV=test ts-mocha src/**/*.test.ts",
-    "test:watch": "NODE_ENV=test ts-mocha src/**/*.test.ts -w --watch-files 'src/**/*.ts'"
+    "test:watch": "NODE_ENV=test ts-mocha src/**/*.test.ts -w --watch-files 'src/**/*.ts'",
+    "db:create": "sequelize-cli db:create",
+    "db:migrate": "sequelize-cli db:migrate",
+    "db:migration:generate": "sequelize-cli migration:generate",
+    "db:seed": "sequelize-cli db:seed:all",
+    "db:seed:generate": "sequelize-cli seed:generate"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +32,7 @@
     "mocha": "^10.2.0",
     "nodemon": "^2.0.22",
     "prettier": "2.8.8",
+    "sequelize-cli": "^6.6.1",
     "supertest": "^6.3.3",
     "ts-mocha": "^10.0.0",
     "ts-node": "^10.9.1",
@@ -34,6 +40,11 @@
   },
   "dependencies": {
     "@koa/router": "^12.0.0",
-    "koa": "^2.14.2"
+    "@types/pg": "^8.10.2",
+    "dotenv": "^16.3.1",
+    "koa": "^2.14.2",
+    "pg": "^8.11.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.32.1"
   }
 }

@@ -1,0 +1,34 @@
+services:
+  recipe-db:
+    image: "postgres"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    env_file:
+      - ./env/recipe-db.env
+  recipe-api:
+    build:
+      context: ./packages/recipe-api
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./packages/recipe-api:/app
+      - /app/node_modules
+    env_file:
+      - ./packages/recipe-api/.env.dev
+    depends_on:
+      - recipe-db
+  recipe-ui:
+    build:
+      context: ./packages/recipe-ui
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./packages/recipe-ui:/app
+      - /app/node_modules
+    depends_on:
+      - recipe-api
+
+volumes:
+  pgdata:

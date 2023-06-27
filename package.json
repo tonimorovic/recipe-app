@@ -4,20 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:ui": "npm run dev --workspace=recipe-app-ui",
-    "build:ui": "npm run build --workspace=recipe-app-ui",
-    "start:ui": "npm run start --workspace=recipe-app-ui",
-    "lint:ui": "npm run lint --workspace=recipe-app-ui",
-    "dev:api": "npm run dev --workspace=recipe-app-api",
-    "build:api": "npm run build --workspace=recipe-app-api",
-    "start:api": "npm run start --workspace=recipe-app-api",
-    "test:api": "npm run test --workspace=recipe-app-api",
-    "test:api:watch": "npm run test:watch --workspace=recipe-app-api"
+    "dev": "docker compose -f docker-compose.dev.yml up --build"
   },
-  "workspaces": [
-    "packages/recipe-app-ui",
-    "packages/recipe-app-api"
-  ],
   "keywords": [],
   "author": "",
   "license": "ISC"
