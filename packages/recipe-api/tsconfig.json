@@ -1,15 +1,12 @@
 {
   "compilerOptions": {
+    "lib": ["ES2022"],
+    "module": "ES2022",
+    "moduleResolution": "node",
+    "target": "ES2022",
     "outDir": "dist",
-    "sourceMap": true,
-    "target": "ESNext",
-    "module": "CommonJS",
-    "moduleResolution": "Node",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": true,
+    "rootDirs": ["src"],
     "strict": true,
-    "skipLibCheck": true
-  },
-  "include": ["./*.js", "src/**/*.ts", "test/**/*.ts"]
+    "esModuleInterop": true
+  }
 }
