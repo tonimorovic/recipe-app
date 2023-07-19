@@ -1,5 +1,5 @@
-import app from './app';
-import { sequelize } from './sequelize';
+import app from './app.js';
+import { sequelize } from './sequelize.js';
 
 const host = process.env.HOST || 'localhost';
 const port = Number(process.env.PORT) || 4000;

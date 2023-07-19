@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import server from '../test/server';
+import server from '../test/server.js';
 
 describe('Health', () => {
   it('should return server status', async () => {
