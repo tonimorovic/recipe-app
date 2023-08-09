@@ -7,27 +7,23 @@ import cors from '@koa/cors';
 import { ApolloServer } from '@apollo/server';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import { koaMiddleware } from '@as-integrations/koa';
+import { makeExecutableSchema } from '@graphql-tools/schema';
+import { loadFiles } from '@graphql-tools/load-files';
 
 import healthRouter from './routes/health.js';
-
-// The GraphQL schema
-const typeDefs = `#graphql
-  type Query {
-    hello: String
-  }
-`;
-
-// A map of functions which return data for the schema.
-const resolvers = {
-  Query: {
-    hello: () => 'world',
-  },
-};
 
 const app = new Koa();
 const httpServer = http.createServer(app.callback());
 
-const server = new ApolloServer({ typeDefs, resolvers, plugins: [ApolloServerPluginDrainHttpServer({ httpServer })] });
+const typeDefsArray = await loadFiles('**/*', { extensions: ['graphql'] });
+const resolversArray = await loadFiles('**/*', { extensions: ['resolvers.ts'] });
+
+const schema = makeExecutableSchema({ typeDefs: typeDefsArray, resolvers: resolversArray });
+
+const server = new ApolloServer({
+  schema,
+  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+});
 
 await server.start();
 

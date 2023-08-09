@@ -5,9 +5,12 @@
     "moduleResolution": "node",
     "target": "ES2022",
     "outDir": "dist",
-    "rootDirs": ["src"],
+    "rootDirs": ["src", "db"],
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false
   },
   "ts-node": {
     "esm": true

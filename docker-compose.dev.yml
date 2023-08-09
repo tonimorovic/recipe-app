@@ -1,7 +1,10 @@
 services:
   recipe-db:
     image: "postgres"
+    ports:
+      - "5432:5432"
     volumes:
+      - ./docker-multiple-databases:/docker-entrypoint-initdb.d
       - pgdata:/var/lib/postgresql/data
     env_file:
       - ./env/recipe-db.env
