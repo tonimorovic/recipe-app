@@ -1,0 +1,42 @@
+interface Response {
+  success: Boolean!
+  message: String!
+}
+
+type GetUsersResponse implements Response {
+  success: Boolean!
+  message: String!
+  users: [User!]!
+}
+
+type Query {
+  getUsers: GetUsersResponse
+}
+
+input CreateUserInput {
+  username: String!
+  email: String!
+  password: String!
+}
+
+type CreateUserResponse implements Response {
+  success: Boolean!
+  message: String!
+  user: User
+}
+
+type Mutation {
+  createUser(user: CreateUserInput!): CreateUserResponse
+}
+
+type User {
+  id: ID!
+  username: String!
+  email: String!
+  password: String!
+  avatar: String
+  bio: String
+  createdAt: String!
+  updatedAt: String!
+  recipes: [Recipe!]!
+}

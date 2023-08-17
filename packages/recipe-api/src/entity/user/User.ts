@@ -14,10 +14,10 @@ export class User {
   @Column({ type: 'varchar' })
   password: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   avatar: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   bio: string;
 
   @CreateDateColumn({ name: 'created_at' })

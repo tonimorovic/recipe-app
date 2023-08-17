@@ -1,8 +1,14 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
-import { User } from '../../src/entity/User.js';
+import { User } from '../../src/entity/user/User.js';
 import pgconn from 'pg-connection-string';
-import { Migrations1691570994749 } from '../migrations/1691570994749-user.js';
+import { Recipe } from '../../src/entity/recipe/Recipe.js';
+import { Category } from '../../src/entity/category/Category.js';
+import { Comment } from '../../src/entity/comment/Comment.js';
+import { Review } from '../../src/entity/review/Review.js';
+import { Purchase } from '../../src/entity/purchase/Purchase.js';
+import { List } from '../../src/entity/list/List.js';
+import { Migrations1692288831312 } from '../migrations/1692288831312-migrations.js';
 
 const { host, port, user, password, database } = pgconn.parse(process.env.PG_CONNECTION_STRING || 'postgres://');
 
@@ -15,7 +21,7 @@ export const AppDataSource = new DataSource({
   database: database || 'recipe-db',
   synchronize: false,
   logging: false,
-  entities: [User],
-  migrations: [Migrations1691570994749],
+  entities: [User, Recipe, Category, Comment, Review, Purchase, List],
+  migrations: [Migrations1692288831312],
   subscribers: [],
 });
