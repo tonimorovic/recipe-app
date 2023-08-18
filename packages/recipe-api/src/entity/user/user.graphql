@@ -3,14 +3,20 @@ interface Response {
   message: String!
 }
 
-type GetUsersResponse implements Response {
-  success: Boolean!
-  message: String!
+type Query {
   users: [User!]!
 }
 
-type Query {
-  getUsers: GetUsersResponse
+type User {
+  id: ID!
+  username: String!
+  email: String!
+  password: String!
+  avatar: String
+  bio: String
+  createdAt: String!
+  updatedAt: String!
+  recipes: [Recipe!]!
 }
 
 input CreateUserInput {
@@ -27,16 +33,4 @@ type CreateUserResponse implements Response {
 
 type Mutation {
   createUser(user: CreateUserInput!): CreateUserResponse
-}
-
-type User {
-  id: ID!
-  username: String!
-  email: String!
-  password: String!
-  avatar: String
-  bio: String
-  createdAt: String!
-  updatedAt: String!
-  recipes: [Recipe!]!
 }

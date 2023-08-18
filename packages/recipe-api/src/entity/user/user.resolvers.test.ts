@@ -43,11 +43,9 @@ describe('User', () => {
     const body = {
       query: `#graphql
         query {
-          getUsers {
             users {
                 email
             }
-          }
         }
       `,
     };
@@ -58,6 +56,8 @@ describe('User', () => {
     const result = await graphQLServer().send(JSON.stringify(body));
 
     expect(result.body).to.haveOwnProperty('data');
-    expect(result.body.data?.getUsers?.users).to.be.an('array').that.deep.includes({ email: newUser.email });
+    expect(result.body.data?.users)
+      .to.be.an('array')
+      .that.deep.includes({ email: newUser.email });
   });
 });

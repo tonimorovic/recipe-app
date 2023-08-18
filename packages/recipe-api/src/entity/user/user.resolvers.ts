@@ -16,16 +16,16 @@ const userResolver = {
 
         userRecipes.forEach((recipe) => (recipe.ingredients = JSON.stringify(recipe.ingredients)));
 
-        return { success: true, message: `Fetched ${user.username}'s recipes`, recipes: userRecipes };
+        return userRecipes;
       } catch (error) {
         console.error(error);
       }
     },
   },
   Query: {
-    async getUsers() {
+    async users() {
       const users = await userRepository.find();
-      return { success: true, message: 'Fetched all users', users };
+      return users;
     },
   },
   Mutation: {
