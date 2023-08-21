@@ -5,6 +5,7 @@ interface Response {
 
 type Query {
   users: [User!]!
+  user(id: ID!): User!
 }
 
 type User {
@@ -31,6 +32,19 @@ type CreateUserResponse implements Response {
   user: User
 }
 
+input UpdateUserInput {
+  bio: String
+  avatar: String
+  password: String
+}
+
+type UpdateUserResponse implements Response {
+  success: Boolean!
+  message: String!
+  user: User
+}
+
 type Mutation {
   createUser(user: CreateUserInput!): CreateUserResponse
+  updateUser(userId: ID!, updateFields: UpdateUserInput!): UpdateUserResponse
 }
