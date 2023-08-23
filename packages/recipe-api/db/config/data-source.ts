@@ -8,7 +8,7 @@ import { Comment } from '../../src/entity/comment/Comment.js';
 import { Review } from '../../src/entity/review/Review.js';
 import { Purchase } from '../../src/entity/purchase/Purchase.js';
 import { List } from '../../src/entity/list/List.js';
-import { Migrations1692288831312 } from '../migrations/1692288831312-migrations.js';
+import { Migrations1692713310203 } from '../migrations/1692713310203-migrations.js';
 
 const { host, port, user, password, database } = pgconn.parse(process.env.PG_CONNECTION_STRING || 'postgres://');
 
@@ -22,6 +22,6 @@ export const AppDataSource = new DataSource({
   synchronize: false,
   logging: false,
   entities: [User, Recipe, Category, Comment, Review, Purchase, List],
-  migrations: [Migrations1692288831312],
+  migrations: [Migrations1692713310203],
   subscribers: [],
 });

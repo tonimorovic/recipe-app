@@ -1,5 +1,6 @@
 type Query {
   recipes: [Recipe!]!
+  recipe(id: ID!): Recipe!
 }
 
 type Recipe {
@@ -14,4 +15,39 @@ type Recipe {
   user: User!
   createdAt: String!
   updatedAt: String!
+}
+
+input CreateRecipeInput {
+  title: String!
+  description: String!
+  ingredients: String!
+  instructions: String!
+  image: String!
+  price: Float!
+}
+
+type CreateRecipeResponse implements Response {
+  success: Boolean!
+  message: String!
+  recipe: Recipe
+}
+
+input UpdateRecipeInput {
+  title: String
+  description: String
+  ingredients: String
+  instructions: String
+  image: String
+  price: Float
+}
+
+type UpdateRecipeResponse implements Response {
+  success: Boolean!
+  message: String!
+  recipe: Recipe
+}
+
+type Mutation {
+  createRecipe(userId: ID!, recipe: CreateRecipeInput!): CreateRecipeResponse
+  updateRecipe(recipeId:ID!, updateFields: UpdateRecipeInput!): UpdateRecipeResponse
 }

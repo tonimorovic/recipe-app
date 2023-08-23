@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { User } from './User.js';
 import bcrypt from 'bcrypt';
 
-const mockUser = {
+const mockUser: Pick<User, 'username' | 'email' | 'password'> = {
   username: 'toni',
   email: 'tm@gm.commm',
   password: '1234',

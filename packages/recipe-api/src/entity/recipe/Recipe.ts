@@ -32,7 +32,7 @@ export class Recipe {
   @Column({ type: 'float' })
   price: number;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { nullable: false })
   @JoinColumn({ name: 'user_id' })
   user: User;
 
