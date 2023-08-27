@@ -11,6 +11,7 @@ import { makeExecutableSchema } from '@graphql-tools/schema';
 import { loadFiles } from '@graphql-tools/load-files';
 
 import healthRouter from './routes/health.js';
+import { getUser } from './utils/user.js';
 
 const app = new Koa();
 const httpServer = http.createServer(app.callback());
@@ -32,6 +33,22 @@ app.use(bodyParser());
 
 app.use(healthRouter.routes());
 
-app.use(koaMiddleware(server, { context: async ({ ctx }) => ({ token: ctx.headers.token }) }));
+app.use(
+  koaMiddleware(server, {
+    context: async ({ ctx }) => {
+      let user;
+      let isAuthenticated = false;
+      const authorization = ctx.request.headers.authorization;
+
+      if (authorization) {
+        const token = authorization.split('Bearer ')[1];
+        user = await getUser(token);
+        if (user) isAuthenticated = true;
+      }
+
+      return { isAuthenticated, user };
+    },
+  }),
+);
 
 export default app;

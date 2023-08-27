@@ -10,6 +10,8 @@ const mockUser: Pick<User, 'username' | 'email' | 'password'> = {
   password: '1234',
 };
 
+const hashedPassword = await bcrypt.hash(mockUser.password, 12);
+
 const userRepository = AppDataSource.manager.getRepository(User);
 
 describe('User', () => {
@@ -20,24 +22,70 @@ describe('User', () => {
   it('should add user to DB', async () => {
     const body = {
       query: `#graphql
-      mutation CreateUser($user: CreateUserInput!) {
-          createUser(user: $user) {
+      mutation RegisterUser($registerInput: RegisterUserInput!) {
+          registerUser(registerInput: $registerInput) {
               user {
-                username
-                email
+                  username
+                  email
               }
           }
       }
       `,
-      variables: { user: mockUser },
+      variables: { registerInput: { ...mockUser } },
     };
     const result = await graphQLServer().send(JSON.stringify(body));
 
     expect(result.body).to.haveOwnProperty('data');
-    expect(result.body.data?.createUser?.user).to.deep.equal({
+    expect(result.body.data?.registerUser?.user).to.deep.equal({
       username: mockUser.username,
       email: mockUser.email,
     });
+  });
+
+  it('should login user if provided email and password are correct', async () => {
+    const newUser = userRepository.create({ ...mockUser, password: hashedPassword });
+    await userRepository.save(newUser);
+
+    const body = {
+      query: `#graphql
+      mutation LoginUser($loginInput: LoginUserInput!) {
+          loginUser(loginInput: $loginInput) {
+              user {
+                  username
+                  email
+              }
+          }
+      }
+      `,
+      variables: { loginInput: { email: mockUser.email, password: mockUser.password } },
+    };
+    const result = await graphQLServer().send(JSON.stringify(body));
+
+    expect(result.body).to.haveOwnProperty('data');
+    expect(result.body.data?.loginUser?.user).to.deep.equal({
+      username: mockUser.username,
+      email: mockUser.email,
+    });
+  });
+
+  it('shouldn`t login user if provided email and password are incorrect', async () => {
+    const newUser = userRepository.create(mockUser);
+    await userRepository.save(newUser);
+
+    const body = {
+      query: `#graphql
+      mutation LoginUser($loginInput: LoginUserInput!) {
+          loginUser(loginInput: $loginInput) {
+              success
+          }
+      }
+      `,
+      variables: { loginInput: { email: mockUser.email, password: 'sddfsdfsfe' } },
+    };
+    const result = await graphQLServer().send(JSON.stringify(body));
+
+    expect(result.body).to.haveOwnProperty('data');
+    expect(result.body.data?.loginUser?.success).to.be.false;
   });
 
   it('should return list of users', async () => {
@@ -57,9 +105,7 @@ describe('User', () => {
     const result = await graphQLServer().send(JSON.stringify(body));
 
     expect(result.body).to.haveOwnProperty('data');
-    expect(result.body.data?.users)
-      .to.be.an('array')
-      .that.deep.includes({ email: newUser.email });
+    expect(result.body.data?.users).to.be.an('array').that.deep.includes({ email: newUser.email });
   });
 
   it('should return user with specified ID', async () => {

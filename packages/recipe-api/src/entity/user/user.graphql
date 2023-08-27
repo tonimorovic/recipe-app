@@ -20,16 +20,29 @@ type User {
   recipes: [Recipe!]!
 }
 
-input CreateUserInput {
+input RegisterUserInput {
   username: String!
   email: String!
   password: String!
 }
 
-type CreateUserResponse implements Response {
+type RegisterUserResponse implements Response {
   success: Boolean!
   message: String!
   user: User
+  token: String
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
+}
+
+type LoginUserResponse implements Response {
+  success: Boolean!
+  message: String!
+  user: User
+  token: String
 }
 
 input UpdateUserInput {
@@ -45,6 +58,7 @@ type UpdateUserResponse implements Response {
 }
 
 type Mutation {
-  createUser(user: CreateUserInput!): CreateUserResponse
+  registerUser(registerInput: RegisterUserInput!): RegisterUserResponse
+  loginUser(loginInput: LoginUserInput!): LoginUserResponse
   updateUser(userId: ID!, updateFields: UpdateUserInput!): UpdateUserResponse
 }
